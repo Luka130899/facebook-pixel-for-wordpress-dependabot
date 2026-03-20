@@ -30,11 +30,25 @@ namespace FacebookPixelPlugin\Tests;
 use WP_Mock\Tools\TestCase;
 use FacebookPixelPlugin\Core\AAMSettingsFields;
 use FacebookPixelPlugin\FacebookAds\Object\ServerSide\AdsPixelSettings;
+use FacebookPixelPlugin\Core\FacebookSignalState;
 
 /**
  * FacebookWordpressTestBase class.
  */
 abstract class FacebookWordpressTestBase extends TestCase {
+    /**
+     * Shared alias mock handle.
+     *
+     * @var mixed
+     */
+    protected $mocked_fbpixel;
+
+    /**
+     * Shared options alias mock handle.
+     *
+     * @var mixed
+     */
+    protected $mocked_options;
 
     /**
      * Sets up the environment for each test.
@@ -59,6 +73,10 @@ abstract class FacebookWordpressTestBase extends TestCase {
         $_SERVER['HTTPS']       = 'on';
         $_SERVER['HTTP_HOST']   = 'www.pikachu.com';
         $_SERVER['REQUEST_URI'] = '/index.php';
+        $_COOKIE                = array();
+        $_POST                  = array();
+        $_SESSION               = array();
+        FacebookSignalState::resume();
     }
 
     /**
