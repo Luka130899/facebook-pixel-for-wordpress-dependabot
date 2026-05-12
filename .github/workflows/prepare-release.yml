@@ -42,7 +42,7 @@ jobs:
         run: echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Check if branch exists
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           NEW_VERSION: ${{ steps.set_version.outputs.new_version }}
         with:
@@ -65,7 +65,7 @@ jobs:
 
       - name: Get latest release tag
         id: get_release
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             try {
@@ -87,7 +87,7 @@ jobs:
 
       - name: Build changelog from PRs
         id: changelog
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           HAS_RELEASE: ${{ steps.get_release.outputs.has_release }}
           LATEST_TAG: ${{ steps.get_release.outputs.latest_tag }}
@@ -191,7 +191,7 @@ jobs:
           sed -i -E "s/^(Tested up to:).*/\1 $LATEST_WP/" "readme.txt"
 
       - name: Update changelog.txt
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           CHANGELOG_TEXT: ${{ steps.changelog.outputs.changelog }}
         with:
@@ -214,7 +214,7 @@ jobs:
           sed -i -E "s/^(Stable tag:)[[:space:]]*[0-9.]+/\1 $CURRENT_STABLE/" "readme.txt"
 
       - name: Update readme.txt changelog
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           CHANGELOG_TEXT: ${{ steps.changelog.outputs.changelog }}
         with:
