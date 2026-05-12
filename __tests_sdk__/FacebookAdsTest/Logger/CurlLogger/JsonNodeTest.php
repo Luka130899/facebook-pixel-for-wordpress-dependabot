@@ -50,10 +50,7 @@ class JsonNodeTest extends AbstractUnitTestCase {
   public function testGetLastChildKey() {
     $object = JsonNode::factory(array());
     $method = new \ReflectionMethod($object, 'getLastChildKey');
-    $method->setAccessible(true);
 
     $this->assertNull($method->invoke($object));
-
-    $method->setAccessible(false);
   }
 }
