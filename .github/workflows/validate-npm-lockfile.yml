@@ -1,23 +1,42 @@
-name: Validate npm lockfile
+name: Validate npm lockfiles
 
 on:
   pull_request:
 
 jobs:
-  npm-ci:
-    name: npm ci
+  npm-ci-root:
+    name: npm ci (root)
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version-file: package.json
+          node-version: 22
           cache: npm
           cache-dependency-path: package-lock.json
 
-      - name: Verify lockfile install
+      - name: Verify root lockfile install
+        run: npm ci
+
+  npm-ci-js-lib:
+    name: npm ci (js/lib)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: js/lib/package-lock.json
+
+      - name: Verify js/lib lockfile install
+        working-directory: js/lib
         run: npm ci
